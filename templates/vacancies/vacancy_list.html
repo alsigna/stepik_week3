@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<section>
+    <h1 class="h1 text-center mx-auto mt-4 pt-5" style="font-size: 70px;"><strong>{{ title }}</strong></h1>
+    <p class="text-center pt-1">{{ object_list.count }} вакансий</p>
+    <div class="row mt-5">
+        <div class="col-12 col-lg-8 offset-lg-2 m-auto">
+            {% for vacancy in object_list %}
+            {% include "helpers/vacancy_card.html" with vacancy=vacancy %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
