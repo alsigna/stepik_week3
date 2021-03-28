@@ -1,7 +1,8 @@
 from django.db.models import Count
-from django.views.generic import ListView, DetailView
-from django.views.generic.base import TemplateView
 from django.http import Http404
+from django.views.generic import DetailView, ListView
+from django.views.generic.base import TemplateView
+
 from .models import Company, Specialty, Vacancy
 
 
