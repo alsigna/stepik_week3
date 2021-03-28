@@ -44,13 +44,17 @@ class Migration(migrations.Migration):
                 (
                     "company",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, related_name="vacancies", to="vacancies.company"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="vacancies",
+                        to="vacancies.company",
                     ),
                 ),
                 (
                     "specialty",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, related_name="vacancies", to="vacancies.specialty"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="vacancies",
+                        to="vacancies.specialty",
                     ),
                 ),
             ],

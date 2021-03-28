@@ -1,11 +1,12 @@
 from django.db.models import Count
-from django.http import HttpResponseNotFound, HttpResponseServerError
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponseNotFound
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import TemplateView
 from django.http import Http404
-
+from django.shortcuts import render
+from django.views.generic import View
 from .models import Company, Specialty, Vacancy
+from django.shortcuts import get_object_or_404
 
 
 def custom_404(request, exception):
@@ -14,8 +15,6 @@ def custom_404(request, exception):
 
 def custom_500(request):
     raise Http404
-
-    # return HttpResponseServerError("Internal Server Error")
 
 
 class MainView(TemplateView):
@@ -54,17 +53,47 @@ class VacancyView(DetailView):
     model = Vacancy
 
 
-class CompanyView(DetailView):
+# via DetailView
+class CompanyViewVer1(DetailView):
     model = Company
 
 
-# class CompanyView(TemplateView):
-#     template_name = "vacancies/company.html"
+# the same via View + get_object_or_404
+class CompanyViewVer2(View):
+    def get(self, request, *args, **kwargs):
+        company_pk = self.kwargs.get("pk", None)
+        if not company_pk:
+            raise Http404
+        company = get_object_or_404(Company, pk=company_pk)
+        return render(
+            request=request,
+            template_name="vacancies/company_detail.html",
+            context={
+                "object": company,
+            },
+        )
 
-#     def get_context_data(self, company_id, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         company = get_object_or_404(Company, id=company_id)
-#         vacancies = Vacancy.objects.filter(company=company)
-#         context["company"] = company
-#         context["vacancies"] = vacancies
-#         return context
+
+# the same via View + prefetch_related
+class CompanyViewVer3(View):
+    def get(self, request, *args, **kwargs):
+        company_pk = self.kwargs.get("pk", None)
+        if not company_pk:
+            raise Http404
+        company = Company.objects.prefetch_related("vacancies").filter(pk=company_pk).first()
+        if not (company):
+            raise Http404
+        return render(
+            request=request,
+            template_name="vacancies/company_detail.html",
+            context={
+                "object": company,
+            },
+        )
+
+
+class CompanyViewVer4(DetailView):
+    model = Company
+
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related("vacancies")
