@@ -1,6 +1,6 @@
-from django.urls import path
-from vacancies.views import custom_500, MainView, VacanciesView, VacancyView, CompanyView
-from django.urls import re_path
+from django.conf import settings
+from django.urls import include, path, re_path
+from vacancies.views import CompanyView, MainView, VacanciesView, VacancyView, custom_500
 
 handler500 = custom_500
 
@@ -10,3 +10,8 @@ urlpatterns = [
     path("vacancies/<int:pk>", VacancyView.as_view(), name="vacancy"),
     path("companies/<int:pk>", CompanyView.as_view(), name="company"),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns += [path("__debug__/", include(debug_toolbar.urls))]

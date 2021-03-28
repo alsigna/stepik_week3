@@ -5,13 +5,13 @@
 <div class="row mt-5">
     <div class="col-12 col-lg-2">
         <div class="pl-3 mb-5">
-            <p><a href="#">Назад</a></p>
+            <p><a href="{{ request.META.HTTP_REFERER }}">Назад</a></p>
         </div>
     </div>
     <div class="col-12 col-lg-8">
         <section class="pl-3">
-            <a href="{% url 'vacancies' object.specialty.code %}">
-                <img src="{% static object.specialty.picture %}" width="80" height="80" alt="">
+            <a href="{% url 'company' object.company.id %}">
+                <img src="{% static object.company.logo %}" class="mx-auto d-block mw-100" alt="">
             </a>
             <div class="d-flex align-items-baseline align-content-baseline">
                 <h1 class="h2 mt-4 font-weight-bold">{{ object.title }}</h1>

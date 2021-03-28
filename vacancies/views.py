@@ -33,7 +33,7 @@ class VacanciesView(ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = Vacancy.objects.select_related("company")
 
         specialty = self.kwargs.get("slug", None)
         if specialty:
@@ -46,7 +46,7 @@ class VacancyView(DetailView):
     model = Vacancy
 
     def get_queryset(self):
-        return super().get_queryset().select_related("company")
+        return super().get_queryset().select_related("company", "specialty")
 
 
 class CompanyView(DetailView):

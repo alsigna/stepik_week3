@@ -12,3 +12,4 @@ flake8-variables-names
 flake8-comprehensions 
 flake8-django
 flake8-eradicate
+django-debug-toolbar

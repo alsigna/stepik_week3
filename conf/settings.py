@@ -24,14 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "&8950c1v#u$i_90dcn0eh21*f907mmreiymrfa*a8h7q=bcqrr"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
 ]
 
-
+INTERNAL_IPS = [
+    "localhost",
+    "127.0.0.1",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "vacancies",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -52,6 +56,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "conf.urls"
